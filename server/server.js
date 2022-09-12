@@ -7,6 +7,33 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 5000));
 
+// Sorting Criteria to rank the objects in groups
+function sorting(a, b){
+	if (a.points<b.points){
+		return 1
+	}else if (a.points>b.points){
+		return -1
+	}else{
+		if (a.goals<b.goals){
+			return 1
+		}else if (a.goals>b.goals){
+			return -1
+		}else{
+			if (a.altpoints<b.altpoints){
+				return 1
+			}else if (a.altpoints>b.altpoints){
+				return -1
+			}else{
+				if (a.date>b.date){
+					return 1
+				}else{
+					return -1
+				}
+			}
+		}
+	}
+}
+
 // Receives LongURL via post req body and generates a ShortURL then stores in MySQL backend service
 app.post('/ranked', async(req, res)=>{
 	let group1 = []
@@ -61,8 +88,9 @@ app.post('/ranked', async(req, res)=>{
 			fullbracket[tie2.group-1][tie2.index].goals += parseInt(line[3])  
 		}
 	})
-	console.log(fullbracket)
-	res.send({"Testing":123}) 
+	group1.sort((a, b)=>sorting(a, b))
+	group2.sort((a, b)=>sorting(a, b))
+	res.send({"group1":group1, "group2":group2}) 
 })
 
 // Listen on assigned port
