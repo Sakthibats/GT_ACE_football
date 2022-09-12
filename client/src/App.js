@@ -5,12 +5,11 @@ import Header from './components/Header';
 import Results from './components/Results';
 
 function App() {
-
+	// Stateful stores of data to pass to children and update from children
 	const [rankdata, setRankdata] = useState([])
 	const [buttonbool, setbuttonbool] = useState(false)
-	console.log(rankdata)
 
-
+	// Loading icon
 	function Spinner(){
 		return(
 			<div className="spinner-border text-primary" role="status">

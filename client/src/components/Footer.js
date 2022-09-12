@@ -1,5 +1,6 @@
 import React from 'react'
 
+// Footer of app contains github link to repository
 function Footer() {
   return (
     <nav className="navbar navbar-dark bg-secondary" style={{"minHeight":"90px", "marginTop":"20px"}}>

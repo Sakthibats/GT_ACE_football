@@ -10,13 +10,14 @@ app.set('port', (process.env.PORT || 5000));
 
 const corsOptions ={
    origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
+   credentials:true,  //access-control-allow-credentials:true
    optionSuccessStatus:200,
 }
 
 app.use(cors(corsOptions)) // Use this after the variable declaration
 
-// Sorting Criteria to rank the objects in groups
+// Sorting Criteria to rank the objects in groups. 
+// Sorting priority in order of points=> goals=> altpoints => register date
 function sorting(a, b){
 	if (a.points<b.points){
 		return 1
@@ -42,6 +43,8 @@ function sorting(a, b){
 		}
 	}
 }
+
+// On startup of Backend API service on browser
 app.get('/', (req, res)=>{
 	res.send("Backend API service for Football Tournament")
 })
@@ -107,5 +110,5 @@ app.post('/ranked', async(req, res)=>{
 
 // Listen on assigned port
 app.listen(app.get('port'), function () {
-    console.log(`URL Shortening service listening at port: ${app.get('port')}`);
+    console.log(`Football Tournament ranking applet listening at port: ${app.get('port')}`);
 });

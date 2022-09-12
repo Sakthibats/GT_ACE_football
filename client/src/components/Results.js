@@ -1,9 +1,8 @@
 import React from 'react'
-
+// Takes in ranked order of teams and renders them in tabular format
 function Results(props) {
-    console.log(props.alldata)
 
-
+    // Functional component to render table given input. First four row will have different CSS styling to indicate next round progression
     function TableObj(data){
         let rowcount = 0
         return(
