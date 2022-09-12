@@ -33,6 +33,9 @@ function sorting(a, b){
 		}
 	}
 }
+app.get('/', (req, res)=>{
+	res.send("Backend API service for Football Tournament")
+})
 
 // Receives LongURL via post req body and generates a ShortURL then stores in MySQL backend service
 app.post('/ranked', async(req, res)=>{
