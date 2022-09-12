@@ -8,8 +8,60 @@ app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 5000));
 
 // Receives LongURL via post req body and generates a ShortURL then stores in MySQL backend service
-app.post('/ranked', (req, res)=>{
-	console.log(req.body)
+app.post('/ranked', async(req, res)=>{
+	let group1 = []
+	let group2 = []
+	let indexed = {}
+	let teamdetails = req.body.Teams.trim(); //Trim extra spaces before and after string
+	await teamdetails.split('\n').forEach(element => {
+		let line = element.split(' ')
+		let date = line[1].split('/')
+		if (line[2] == '1'){
+			indexed[line[0]] = {'group':1, 'index':group1.length}
+			group1.push({'name':line[0], 'date': new Date('2022', date[1], date[0]),'points':0, "altpoints":0, 'goals':0})
+
+		}else{
+			indexed[line[0]] = {'group':2, 'index':group2.length}
+			group2.push({'name':line[0], 'date': new Date('2022', date[1], date[0]), 'points':0, "altpoints":0, 'goals':0})
+		}
+	});
+	let fullbracket = [group1, group2]
+	let matchdetails = req.body.Matches.trim(); //Trim extra spaces before and after string
+	await matchdetails.split('\n').forEach(element=>{
+		let line = element.split(' ')
+		// First Wins
+		if (parseInt(line[2])>parseInt(line[3])){
+			let winner = indexed[line[0]]
+			let loser = indexed[line[1]]
+			fullbracket[winner.group-1][winner.index].points += 3 
+			fullbracket[winner.group-1][winner.index].altpoints += 5 
+			fullbracket[winner.group-1][winner.index].goals += parseInt(line[2])  
+			fullbracket[loser.group-1][loser.index].altpoints += 1 
+			fullbracket[loser.group-1][loser.index].goals += parseInt(line[3]) 
+		}
+		// Second Wins
+		else if (parseInt(line[3])>parseInt(line[2])){
+			let winner = indexed[line[1]]
+			let loser = indexed[line[0]]
+			fullbracket[winner.group-1][winner.index].points += 3 
+			fullbracket[winner.group-1][winner.index].altpoints += 5 
+			fullbracket[winner.group-1][winner.index].goals += parseInt(line[3])  
+			fullbracket[loser.group-1][loser.index].altpoints += 1 
+			fullbracket[loser.group-1][loser.index].goals += parseInt(line[2]) 
+		}
+		// Tie
+		else if (parseInt(line[2])==parseInt(line[3])){
+			let tie1 = indexed[line[0]]
+			let tie2 = indexed[line[1]]
+			fullbracket[tie1.group-1][tie1.index].points += 1 
+			fullbracket[tie1.group-1][tie1.index].altpoints += 3 
+			fullbracket[tie1.group-1][tie1.index].goals += parseInt(line[2])  
+			fullbracket[tie2.group-1][tie2.index].points += 1 
+			fullbracket[tie2.group-1][tie2.index].altpoints += 3 
+			fullbracket[tie2.group-1][tie2.index].goals += parseInt(line[3])  
+		}
+	})
+	console.log(fullbracket)
 	res.send({"Testing":123}) 
 })
 
