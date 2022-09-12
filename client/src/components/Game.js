@@ -15,7 +15,7 @@ function Game(props) {
         const formData = new FormData(event.currentTarget)
         formData.forEach((value, property) => responseBody[property] = value);
         const teammatch = JSON.stringify(responseBody)
-        const data = await fetch("/ranked",{
+        const data = await fetch("https://govtacefootball.herokuapp.com/ranked",{
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: teammatch
