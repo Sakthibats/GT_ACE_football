@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const cors=require("cors");
+// const cors=require("cors");
 
 // App config & Middlewares
 const app = express();
@@ -8,13 +8,13 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.set('port', (process.env.PORT || 5000));
 
-const corsOptions ={
-   origin:'*', 
-   credentials:true,  //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-}
+// const corsOptions ={
+//    origin:'*', 
+//    credentials:true,  //access-control-allow-credentials:true
+//    optionSuccessStatus:200,
+// }
 
-app.use(cors(corsOptions)) // Use this after the variable declaration
+// app.use(cors(corsOptions)) // Use this after the variable declaration
 
 // Sorting Criteria to rank the objects in groups. 
 // Sorting priority in order of points=> goals=> altpoints => register date
@@ -105,6 +105,7 @@ app.post('/ranked', async(req, res)=>{
 	})
 	group1.sort((a, b)=>sorting(a, b))
 	group2.sort((a, b)=>sorting(a, b))
+	console.log(group1, group2)
 	res.send({"group1":group1, "group2":group2}) 
 })
 
