@@ -3,9 +3,7 @@
 Backend service is deployed on Heroku: https://govtacefootball.herokuapp.com/
 
 #### For local run 
-If you wish to run locally you may have to edit certain files. The edits have been done on a seperate branch called localrun. Checkout to this branch locally
-
-For local run cd into this project directory and you can run:
+If you wish to run locally you may have to edit certain files. The edits have been done on a seperate branch called **localrun**. Checkout to localrun locally. For local run cd into this project directory and you can run the following commands:
 
 ### `npm run dev`
 
