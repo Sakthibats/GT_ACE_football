@@ -13,5 +13,6 @@ The page will run server.js on port.
 
 ### `npm devtest`
 
-Concurrently runs both frontend and backend on terminal.\ 
-This is for local hosting and as such would require to edit fetch operation on frontend \client\src\components\Game.js
+Concurrently runs both frontend and backend on terminal. 
+This is for local hosting and as such would require to edit 
+fetch operation on frontend \client\src\components\Game.js
